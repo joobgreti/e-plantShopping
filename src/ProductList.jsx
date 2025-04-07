@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ProductList.css'
 import CartItem from './CartItem';
+import { addItem } from './CartSlice';
 function ProductList({ onHomeClick }) {
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
@@ -212,6 +213,9 @@ function ProductList({ onHomeClick }) {
             ]
         }
     ];
+
+    const [addedToCart, setAddedToCart] = useState({});
+
     const styleObj = {
         backgroundColor: '#4CAF50',
         color: '#fff!important',
@@ -232,6 +236,13 @@ function ProductList({ onHomeClick }) {
         fontSize: '30px',
         textDecoration: 'none',
     }
+
+    const handleAddToCart = (product) => {
+        dispatch(addItem(product));
+        setAddedToCart((prevState) => ({
+            ...prevState, [product.name]: true,
+        }));
+    };
 
     const handleHomeClick = (e) => {
         e.preventDefault();
